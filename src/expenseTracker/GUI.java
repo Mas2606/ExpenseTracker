@@ -56,11 +56,7 @@ public class GUI {
 
         inputPanel.add(new JLabel("Beschreibung:"));
         beschreibungField = new JTextField();
-        beschreibungField.getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e) { validateTextInput(beschreibungField, "^[^0-9]*$", "Keine Zahlen in der Beschreibung erlaubt!"); }
-            public void removeUpdate(DocumentEvent e) { validateTextInput(beschreibungField, "^[^0-9]*$", "Keine Zahlen in der Beschreibung erlaubt!"); }
-            public void changedUpdate(DocumentEvent e) { validateTextInput(beschreibungField, "^[^0-9]*$", "Keine Zahlen in der Beschreibung erlaubt!"); }
-        });
+       
         inputPanel.add(beschreibungField);
 
         inputPanel.add(new JLabel("Kosten (EUR):"));
