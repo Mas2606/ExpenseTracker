@@ -7,6 +7,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class GUI {
     private JFrame frame;
@@ -146,15 +149,19 @@ public class GUI {
             return false;
         }
 
-        // Datum muss im Format TT.MM.JJJJ sein
-        if (!datumField.getText().matches("^\\d{2}\\.\\d{2}\\.\\d{4}$")) {
+     // Datum muss im Format TT.MM.JJJJ sein
+        String datumText = datumField.getText();
+        if (!datumText.matches("^\\d{2}\\.\\d{2}\\.\\d{4}$")) {
             JOptionPane.showMessageDialog(frame, "Datum muss im Format TT.MM.JJJJ sein!", "Ungültige Eingabe", JOptionPane.WARNING_MESSAGE);
             return false;
         }
 
-        // Beschreibung darf keine Zahlen enthalten
-        if (!beschreibungField.getText().matches("^[^0-9]*$")) {
-            JOptionPane.showMessageDialog(frame, "Keine Zahlen in der Beschreibung erlaubt!", "Ungültige Eingabe", JOptionPane.WARNING_MESSAGE);
+        // Prüfen, ob das Datum existiert
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        try {
+            LocalDate.parse(datumText, formatter);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(frame, "Ungültiges Datum!", "Ungültige Eingabe", JOptionPane.WARNING_MESSAGE);
             return false;
         }
 
