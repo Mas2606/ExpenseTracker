@@ -71,7 +71,9 @@ public class GUI {
         JButton hinzufuegenButton = new JButton("Hinzufügen");
         hinzufuegenButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                hinzufuegenAusgabe();
+            	if (validiereEingaben()) {
+                    hinzufuegenAusgabe();
+                }
             }
         });
         inputPanel.add(hinzufuegenButton);
@@ -136,7 +138,36 @@ public class GUI {
         gesamtLabel.setText("Gesamtausgaben: " + String.format("%.2f", gesamt) + " EUR");
     }
 
-    
+ // Methode zur Validierung aller Eingabefelder
+    private boolean validiereEingaben() {
+        // Name darf keine Zahlen enthalten
+        if (!nameField.getText().matches("^[^0-9]*$")) {
+            JOptionPane.showMessageDialog(frame, "Keine Zahlen im Namen erlaubt!", "Ungültige Eingabe", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        // Datum muss im Format TT.MM.JJJJ sein
+        if (!datumField.getText().matches("^\\d{2}\\.\\d{2}\\.\\d{4}$")) {
+            JOptionPane.showMessageDialog(frame, "Datum muss im Format TT.MM.JJJJ sein!", "Ungültige Eingabe", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        // Beschreibung darf keine Zahlen enthalten
+        if (!beschreibungField.getText().matches("^[^0-9]*$")) {
+            JOptionPane.showMessageDialog(frame, "Keine Zahlen in der Beschreibung erlaubt!", "Ungültige Eingabe", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        // Kosten muss eine Zahl sein
+        if (!kostenField.getText().matches("^[0-9]*\\.?[0-9]+$")) {
+            JOptionPane.showMessageDialog(frame, "Nur Zahlen im Kostenfeld erlaubt!", "Ungültige Eingabe", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        // Wenn alles gültig ist
+        return true;
+    }
+
         
     }
 
